@@ -1,0 +1,2 @@
+class FreeForm < ApplicationRecord
+end

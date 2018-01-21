@@ -1,0 +1,2 @@
+class StructuredArgumentsController < ApplicationController
+end

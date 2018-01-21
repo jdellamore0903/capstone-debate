@@ -1,0 +1,2 @@
+class ResponseTypesController < ApplicationController
+end
