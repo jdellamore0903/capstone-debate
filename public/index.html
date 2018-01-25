@@ -108,7 +108,8 @@
 <template id="topic-page">
   <div class="vue-component">
     <p>{{ topic }}</p>
-    <p v-for="debate in debates">
+    
+    <p v-for="debate in debates" v-on:click="directToDebates(debate)">
     {{ debate }}
     </p>
 
@@ -171,6 +172,20 @@
       </div>
       <button class="btn btn-primary" v-on:click="submit()">Submit</button>
     </div>
+
+  </div>
+</template>
+<!-- ----------------------------------- -->
+
+<!-- ----------------------------------- -->
+<template id="debate-page">
+  <div class="vue-component">
+    <p v-for="speech in speeches"> 
+      {{ speech }} 
+    </p>
+
+    <p v-on:click="hideShow1">hi</p>
+    <template v-if=hideShow>My name is john</template>
 
   </div>
 </template>

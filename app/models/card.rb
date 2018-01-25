@@ -6,13 +6,10 @@ class Card < ApplicationRecord
       id: id,
       tag: tag,
       card_text: card_text,
-      argument_type: argument_type,
       user_id: user_id,
       citation_id: citation_id,
       bibliography: bibliography,
-      debate_id: debate_id,
-      topic_id: topic_id,
-      speech_id: speech_id
+      argument_id: argument_id
     }
   end
 

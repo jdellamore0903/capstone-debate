@@ -42,4 +42,11 @@ Rails.application.routes.draw do
   patch '/debates/:id' => 'debates#update'
   delete 'debates/:id' => 'debates#destroy'
 
+  get '/speeches' => 'speeches#index'
+  get '/speeches/by-debate/:debate_id' => 'speeches#find_all_debate_speeches'
+  get '/speeches/:id' => 'speeches#show'
+  post '/speeches' => 'speeches#create'
+  patch '/speeches/:id' => 'speeches#update'
+  delete 'speeches/:id' => 'speeches#destroy'
+
 end

@@ -183,13 +183,79 @@ var TopicPage = {
       //using the free arrays, we want to now update the debate entry to add the new user id
       console.log(freeAffDebates);
       console.log(freeNegDebates);
+    },
+    directToDebates: function(inputDebate) {
+      console.log(inputDebate.id);
+      return router.push({path: '/debate/' + inputDebate.id});
     }
   },
   computed: {}
 };
 '________________________________';
 
+'________________________________';
+var DebatePage = {
+  template: "#debate-page",
+  data: function() {
+    return {
+      message: "Welcome to Vue.js!",
+      speeches: [],
+      structuredArguments: [],
+      freeFormArguments: [],
+      hideShow: false
+    };
+  },
+  created: function() {
+    axios.get('/speeches/by-debate/' + this.$route.params.id).then(function(response) {
+      console.log(response.data[0]);
+      sortedSpeeches = [];
+      for (var i = 0; i < response.data.length; i++) {
+        switch (response.data[i].speech_title) {
+          case "1AC":
+            sortedSpeeches[0] = response.data[i];
+            break;
+          case "1NC":
+            sortedSpeeches[1] = response.data[i];
+            break;
+          case "2AC":
+            sortedSpeeches[2] = response.data[i];
+            break;
+          case "2NC":
+            sortedSpeeches[3] = response.data[i];
+            break;
+          case "1AR":
+            sortedSpeeches[4] = response.data[i];
+            break;
+          case "1NR":
+            sortedSpeeches[5] = response.data[i];
+            break;
+        }
+      }
+      console.log(sortedSpeeches);
+      this.speeches = sortedSpeeches;
+    }.bind(this));
+  },
+  methods: {
+    getArguements: function(inputSpeech) {
+      axios.get('/speeches/by-debate/' + this.$route.params.id).then(function(response) {
+        console.log(response.data);
+        // this.structuredArguments = sortedSpeeches;
+      }.bind(this));
 
+      axios.get('/speeches/by-debate/' + this.$route.params.id).then(function(response) {
+        console.log(response.data);
+        // this.freeFormArguments = sortedSpeeches;
+      }.bind(this));
+
+    },
+    hideShow1: function() {
+      console.log(this.hideShow);
+      this.hideShow = true;
+    }.bind(this)
+  },
+  computed: {}
+};
+'________________________________';
 
 
 
@@ -201,7 +267,8 @@ var router = new VueRouter({
     { path: "/signup", component: SignupPage },
     { path: "/logout", component: LogoutPage },
     { path: '/create-a-topic', component: CreateTopic },
-    { path: '/topic-page/:id', component: TopicPage }
+    { path: '/topic-page/:id', component: TopicPage },
+    { path: '/debate/:id', component: DebatePage}
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };
