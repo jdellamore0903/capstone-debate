@@ -1,5 +1,6 @@
 class Card < ApplicationRecord
   belongs_to :citation
+  belongs_to :structured_argument
 
   def as_json
     {
@@ -8,8 +9,7 @@ class Card < ApplicationRecord
       card_text: card_text,
       user_id: user_id,
       citation_id: citation_id,
-      bibliography: bibliography,
-      argument_id: argument_id
+      bibliography: bibliography
     }
   end
 

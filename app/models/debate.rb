@@ -1,5 +1,6 @@
 class Debate < ApplicationRecord
   belongs_to :topic
+  has_many :speeches
 
   def as_json
     {
@@ -9,7 +10,8 @@ class Debate < ApplicationRecord
       affirmative_votes: affirmative_votes,
       negative_votes: negative_votes,
       topic_id: topic_id,
-      open?: determine_open
+      open?: determine_open,
+      speeches: speeches.as_json
     }
   end
 

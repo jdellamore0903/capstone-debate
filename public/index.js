@@ -202,56 +202,178 @@ var DebatePage = {
       speeches: [],
       structuredArguments: [],
       freeFormArguments: [],
-      hideShow: false
+      hideShow: false,
+      debateID: 0,
+      nextSpeech: ""
     };
   },
   created: function() {
     axios.get('/speeches/by-debate/' + this.$route.params.id).then(function(response) {
-      console.log(response.data[0]);
+      console.log(response.data);
       sortedSpeeches = [];
       for (var i = 0; i < response.data.length; i++) {
         switch (response.data[i].speech_title) {
           case "1AC":
             sortedSpeeches[0] = response.data[i];
+            sortedSpeeches[0]["show"] = false;
             break;
           case "1NC":
             sortedSpeeches[1] = response.data[i];
+            sortedSpeeches[1]["show"] = false;
             break;
           case "2AC":
             sortedSpeeches[2] = response.data[i];
+            sortedSpeeches[2]["show"] = false;
             break;
           case "2NC":
             sortedSpeeches[3] = response.data[i];
+            sortedSpeeches[3]["show"] = false;
             break;
           case "1AR":
             sortedSpeeches[4] = response.data[i];
+            sortedSpeeches[4]["show"] = false;
             break;
           case "1NR":
             sortedSpeeches[5] = response.data[i];
+            sortedSpeeches[5]["show"] = false;
             break;
         }
       }
-      console.log(sortedSpeeches);
       this.speeches = sortedSpeeches;
+      console.log(this.speeches[this.speeches.length - 1]);
+      this.debateID = this.speeches[this.speeches.length - 1].debate_id;
+      var speechOrder = ["1AC", "1NC", "2AC", "2NC", "1AR", "1NR"];
+      this.nextSpeech = speechOrder[speechOrder.indexOf(this.speeches[this.speeches.length - 1].speech_title) + 1];
     }.bind(this));
   },
   methods: {
-    getArguements: function(inputSpeech) {
-      axios.get('/speeches/by-debate/' + this.$route.params.id).then(function(response) {
-        console.log(response.data);
-        // this.structuredArguments = sortedSpeeches;
-      }.bind(this));
-
-      axios.get('/speeches/by-debate/' + this.$route.params.id).then(function(response) {
-        console.log(response.data);
-        // this.freeFormArguments = sortedSpeeches;
-      }.bind(this));
-
+    showStuff: function(inputSpeech) {
+      return inputSpeech.show = !inputSpeech.show;
     },
-    hideShow1: function() {
-      console.log(this.hideShow);
-      this.hideShow = true;
-    }.bind(this)
+    createASpeech: function() {
+      return router.push({path: '/create-speech/' + this.debateID + '/' + this.nextSpeech});
+    }
+  },
+  computed: {}
+};
+'________________________________';
+
+'________________________________';
+var CreateSpeech = {
+  template: "#create-a-speech",
+  data: function() {
+    return {
+      message: "Welcome!",
+      debateID: 0,
+      speech: "",
+      speechID: 0,
+      completedStructured: [],
+      completedFreeForm: [],
+      completedCards: [],
+      structuredArgumentsForm: [],
+      freeFormsForm: [],
+      cardsForm: [],
+      argumentName: "",
+      cardTag: "",
+      authorFirst: "",
+      authorLast: "",
+      articleTitle: "",
+      articleDate: "",
+      URL: "",
+      cardText: "",
+      cardCommit: false,
+      freeFormText: ""
+    };
+  },
+  created: function() {
+    this.debateID = this.$route.params.id;
+    this.speech = this.$route.params.speech;
+  },
+  methods: {
+    createTopic: function() {
+      console.log(this.topicTitle);
+      var params = {
+        topic_title: this.topicTitle
+      };
+      axios.post('/topics', params).then(
+        function(response) {
+          console.log(response.data);
+        }.bind(this));
+    },
+    addStructured: function() {
+      if (this.structuredArgumentsForm.length < 1) {
+        this.structuredArgumentsForm.push({
+          text: "Argument Name"
+        });
+      }  
+    },
+    addFreeForm: function() {
+      if (this.freeFormsForm.length < 1) {
+        this.freeFormsForm.push({
+          text: "Argument Text"
+        });
+      }
+    },
+    commitStructured: function() {
+      this.completedStructured.push(this.argumentName);
+      console.log(this.completedStructured);
+    },
+    addCards: function() {
+      this.completedStructured.push({title: this.argumentName, cards: []});
+      this.structuredArgumentsForm = [];
+      this.cardsForm.push({
+        text1: "Tag",
+        text2: "Author First Name",
+        text3: "Author Last Name",
+        text4: "Article Title",
+        text5: "Article Date",
+        text6: "URL",
+        text7: "Card Text"
+      });
+    },
+    addCard: function() {
+      console.log(this.completedStructured.length);
+      console.log(this.completedStructured);
+      this.completedStructured[this.completedStructured.length - 1].cards.push({
+        tag: this.cardTag,
+        authorFirst: this.authorFirst,
+        authorLast: this.authorLast,
+        articleTitle: this.articleTitle,
+        articleDate: this.articleDate,
+        URL: this.URL,
+        cardText: this.cardText
+      });
+      console.log(this.completedStructured);
+      this.cardCommit = true;
+      this.cardTag = "";
+      this.authorFirst = "";
+      this.authorLast = "";
+      this.articleTitle = "";
+      this.articleDate = "";
+      this.URL = "";
+      this.cardText = "";
+    },
+    finishedCard: function() {
+      this.cardsForm = [];
+      this.argumentName = "";
+    },
+    addFreeFormArgument: function() {
+      this.completedFreeForm.push({
+        text: this.freeFormText
+      });
+      this.freeFormText = "";
+    },
+    commitSpeech: function() {
+      this.completedStructured.unshift({
+        debate_id: this.debateID,
+        speech: this.speech
+      });
+      axios.post('/create-speeches', this.completedStructured).then(
+        function(response) {
+          this.speechID = response.data.id;
+        }.bind(this));
+      return router.push({path: '/debate/' + this.debateID});
+    }
   },
   computed: {}
 };
@@ -268,7 +390,8 @@ var router = new VueRouter({
     { path: "/logout", component: LogoutPage },
     { path: '/create-a-topic', component: CreateTopic },
     { path: '/topic-page/:id', component: TopicPage },
-    { path: '/debate/:id', component: DebatePage}
+    { path: '/debate/:id', component: DebatePage},
+    { path: '/create-speech/:id/:speech', component: CreateSpeech}
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };

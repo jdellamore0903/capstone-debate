@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180125021349) do
+ActiveRecord::Schema.define(version: 20180128152608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20180125021349) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "structured_argument?"
-    t.integer "argument_id"
+    t.integer "structured_argument_id"
   end
 
   create_table "citation_comments", force: :cascade do |t|
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20180125021349) do
     t.string "user"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "response_id"
+    t.integer "speech_id"
   end
 
   create_table "response_types", force: :cascade do |t|

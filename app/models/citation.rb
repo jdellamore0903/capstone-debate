@@ -10,6 +10,11 @@ class Citation < ApplicationRecord
   def as_json
     {
       id: id,
+      author_first: author_first,
+      author_last: author_last,
+      url_link: url_link,
+      up_vote: up_vote,
+      down_vote: down_vote,
       citation_comments: citation_comments
     }
     

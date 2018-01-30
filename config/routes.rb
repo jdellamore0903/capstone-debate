@@ -46,7 +46,14 @@ Rails.application.routes.draw do
   get '/speeches/by-debate/:debate_id' => 'speeches#find_all_debate_speeches'
   get '/speeches/:id' => 'speeches#show'
   post '/speeches' => 'speeches#create'
+  post '/create-speeches' => 'speeches#commit_speech'
   patch '/speeches/:id' => 'speeches#update'
   delete 'speeches/:id' => 'speeches#destroy'
+
+  get '/structured_arguments' => 'structured_arguments#index'
+  get '/structured_arguments/:id' => 'structured_arguments#show'
+  post '/structured_arguments' => 'structured_arguments#create'
+  patch '/structured_arguments/:id' => 'structured_arguments#update'
+  delete 'structured_arguments/:id' => 'structured_arguments#destroy'
 
 end
