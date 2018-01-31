@@ -11,6 +11,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+
+
 </head>
 
 <body>
@@ -113,9 +116,8 @@
     Debate!  (Aff Votes: {{debate.affirmative_votes}} Neg Votes: {{debate.negative_votes}})
     </p>
 
-    <button v-on:click="findFree">Go Aff</button>
-    <button>Go Neg</button>
-    <button>Switch Side!</button>
+    <button v-on:click="findFreeAff">Go Aff</button>
+    <button v-on:click="findFreeNeg">Go Neg</button>
 
   </div>
 </template>
@@ -208,13 +210,11 @@
   <div class="vue-component">
     <div v-for="structured in completedStructured">
       <h3>{{ structured.title }}</h3>
-      <p v-for="card in structured.cards">
+      <p v-for="card in structured.cards" v-on:click="editCard(card)">
         {{ card }}
       </p>
     </div>
-    <div v-for="free in completedFreeForm">
-      {{ free }}
-    </div>
+
 
     <div v-for="structured in structuredArgumentsForm">
       {{ structured.text }}: <input type="text" v-model="argumentName">
@@ -234,18 +234,9 @@
       <button v-on:click="finishedCard">Finished</button>
     </div> 
 
-
-    <div v-for="freeForm in freeFormsForm">
-      {{ freeForm.text }}: <input type="text" v-model="freeFormText">
-      <button v-on:click="addFreeFormArgument">Add</button>
-    </div>
-
-
-
     <br>
     <br>
     <button v-on:click="addStructured">Add Structured Argument</button>
-    <button v-on:click="addFreeForm">Add Free Form</button>
     <button v-on:click="commitSpeech">Commit Speech!</button>
 
   </div>

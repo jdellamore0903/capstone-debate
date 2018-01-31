@@ -107,12 +107,8 @@ class SpeechesController < ApplicationController
       end
       index += 1
     end
-    
-
-
-
-
-
+    render json: {speech_id: speech_id}
+  
   end
 
 end

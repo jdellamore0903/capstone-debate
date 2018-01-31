@@ -40,5 +40,12 @@ class FreeformController < ApplicationController
     ff_text.destroy
   end
 
+  def create_many
+    p '-----------------------------'
+    p params
+    p '-----------------------------'
+  end
+
+
 
 end

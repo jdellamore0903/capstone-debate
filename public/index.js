@@ -156,7 +156,9 @@ var TopicPage = {
       message: "Welcome to Vue.js!",
       topic: "",
       debates: [],
-      side: ""
+      side: "",
+      topicID: 0,
+      myDebateId: 0
     };
   },
   created: function() {
@@ -164,25 +166,85 @@ var TopicPage = {
       console.log(response.data);
       this.topic = response.data.topic_title;
       this.debates = response.data.debates;
+      this.topicID = response.data.id;
     }.bind(this));
   },
   methods: {
-    findFree: function() {
+    findFreeAff: function() {
+      openDebate = false;
       debates = this.debates;
       freeAffDebates = [];
-      freeNegDebates = [];
       for (var i = 0; i < debates.length; i++) {
         if (!debates[i]["open?"]) {
-          if (debates[i].aff_user_id) {
-            freeNegDebates.push(debates[i]);
-          }else {
+          if (!debates[i].aff_user_id) {
             freeAffDebates.push(debates[i]);
+            openDebate = true;
           }
         }
       }
-      //using the free arrays, we want to now update the debate entry to add the new user id
       console.log(freeAffDebates);
+      if (openDebate) {
+        //redirect to debate page and create 1AC
+        console.log("IT ENTERED");
+        var params = {
+          aff_user_id: 1
+        };
+        axios.patch('/debates/' + freeAffDebates[0].id, params).then(
+          function(response) {     
+          }.bind(this));
+        return router.push({path: '/debate/' + freeAffDebates[0].id});
+      } else {
+        console.log("IT IS WORKING");
+        var params = {
+          aff_user_id: 1,
+          topic_id: this.topicID
+        };
+        axios.post('/debates', params).then(
+          function(response) {     
+            console.log(response.data);
+            this.myDebateId = response.data.id;
+            console.log(this.myDebateId);
+          }.bind(this));
+        return router.push({path: '/debate/' + this.myDebateId});
+      }
+    },
+    findFreeNeg: function() {
+      openDebate = false;
+      debates = this.debates;
+      freeNegDebates = [];
+      for (var i = 0; i < debates.length; i++) {
+        if (!debates[i]["open?"]) {
+          if (!debates[i].neg_user_id) {
+            freeNegDebates.push(debates[i]);
+            openDebate = true;
+          }
+        }
+      }
       console.log(freeNegDebates);
+      if (openDebate) {
+        //redirect to debate page and create 1AC
+        console.log("IT ENTERED");
+        var params = {
+          neg_user_id: 1
+        };
+        axios.patch('/debates/' + freeNegDebates[0].id, params).then(
+          function(response) {     
+          }.bind(this));
+        return router.push({path: '/debate/' + freeNegDebates[0].id});
+      } else {
+        console.log("IT IS WORKING");
+        var params = {
+          neg_user_id: 1,
+          topic_id: this.topicID
+        };
+        axios.post('/debates', params).then(
+          function(response) {     
+            console.log(response.data);
+            this.myDebateId = response.data.id;
+            console.log(this.myDebateId);
+          }.bind(this));
+        return router.push({path: '/debate/' + this.myDebateId});
+      }
     },
     directToDebates: function(inputDebate) {
       console.log(inputDebate.id);
@@ -203,13 +265,14 @@ var DebatePage = {
       structuredArguments: [],
       freeFormArguments: [],
       hideShow: false,
-      debateID: 0,
+      debateIDNew: 0,
       nextSpeech: ""
     };
   },
   created: function() {
     axios.get('/speeches/by-debate/' + this.$route.params.id).then(function(response) {
       console.log(response.data);
+      this.debateIDNew = this.$route.params.id;
       sortedSpeeches = [];
       for (var i = 0; i < response.data.length; i++) {
         switch (response.data[i].speech_title) {
@@ -239,11 +302,17 @@ var DebatePage = {
             break;
         }
       }
-      this.speeches = sortedSpeeches;
-      console.log(this.speeches[this.speeches.length - 1]);
-      this.debateID = this.speeches[this.speeches.length - 1].debate_id;
-      var speechOrder = ["1AC", "1NC", "2AC", "2NC", "1AR", "1NR"];
-      this.nextSpeech = speechOrder[speechOrder.indexOf(this.speeches[this.speeches.length - 1].speech_title) + 1];
+      console.log(sortedSpeeches.length);
+      if (sortedSpeeches.length === 0) {
+        this.nextSpeech = "1AC";
+      }else {
+        this.speeches = sortedSpeeches;
+        console.log(this.speeches[this.speeches.length - 1]);
+        this.debateIDNew = this.speeches[this.speeches.length - 1].debate_id;
+        var speechOrder = ["1AC", "1NC", "2AC", "2NC", "1AR", "1NR"];
+        this.nextSpeech = speechOrder[speechOrder.indexOf(this.speeches[this.speeches.length - 1].speech_title) + 1];
+      }
+      
     }.bind(this));
   },
   methods: {
@@ -251,7 +320,7 @@ var DebatePage = {
       return inputSpeech.show = !inputSpeech.show;
     },
     createASpeech: function() {
-      return router.push({path: '/create-speech/' + this.debateID + '/' + this.nextSpeech});
+      return router.push({path: '/create-speech/' + this.debateIDNew + '/' + this.nextSpeech});
     }
   },
   computed: {}
@@ -362,6 +431,7 @@ var CreateSpeech = {
         text: this.freeFormText
       });
       this.freeFormText = "";
+      this.freeFormsForm = [];
     },
     commitSpeech: function() {
       this.completedStructured.unshift({
@@ -370,14 +440,29 @@ var CreateSpeech = {
       });
       axios.post('/create-speeches', this.completedStructured).then(
         function(response) {
-          this.speechID = response.data.id;
+          this.speechID = response.data.speech_id;
         }.bind(this));
       return router.push({path: '/debate/' + this.debateID});
+    },
+    editCard: function(inputCard) {
+      //NEED TO FIGURE THIS ONE OUT
+      console.log(inputCard);
+      this.cardTag = inputCard.tag;
+      this.authorFirst = inputCard.authorFirst;
+      this.authorLast = inputCard.authorLast;
+      this.articleTitle = inputCard.articleTitle;
+      this.articleDate = inputCard.articleDate;
+      this.URL = inputCard.URL;
+      this.cardText = inputCard.cardText;
+
+      inputCard.tag = this.cardTag;
     }
   },
   computed: {}
 };
 '________________________________';
+
+
 
 
 

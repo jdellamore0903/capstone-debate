@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get '/freeform' => 'freeform#index'
   get '/freeform/:id' => 'freeform#show'
   post '/freeform' => 'freeform#create'
+  post '/many-freeform' => 'freeform#create_many'
   patch '/freeform/:id' => 'freeform#update'
   delete 'freeform/:id' => 'freeform#destroy'
 
