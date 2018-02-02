@@ -171,6 +171,7 @@ img::-moz-selection {
   }
 }
 
+
 header.masthead {
   margin-bottom: 50px;
   background: no-repeat center center;
@@ -396,7 +397,7 @@ footer .copyright {
 .btn {
   font-size: 14px;
   font-weight: 800;
-  padding: 15px 25px;
+  padding: 10px 25px;
   letter-spacing: 1px;
   text-transform: uppercase;
   border-radius: 0;
@@ -412,6 +413,10 @@ footer .copyright {
   color: #fff;
   background-color: #00657b !important;
   border-color: #00657b !important;
+}
+
+.btn-success {
+    color: #b8ab5c;
 }
 
 .btn-lg {

@@ -1,127 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>My App</title>
-  <script src="https://unpkg.com/vue/dist/vue.js"></script>
-  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.js"></script>
-  <script src="index.js" defer></script>
-  <!-- Bootstrap stuff -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 
+  <head>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-</head>
+    <title>Debate App</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="index.js" defer></script>
 
-<body>
-  <!-- Start of Nav Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <!-- Will want to change color of this -->
-      <a>Debate App!</a>  
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="http://localhost:3000/#/">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Debate!
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="http://localhost:3000/#/topics-list">View Topics</a>
-              <a class="dropdown-item" href="#">Polling</a>
-              <a class="dropdown-item" href="#">Start Debate</a>
-            </div>
-          </li>
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-          <li class="nav-item">
-            <a class="nav-link" href="http://localhost:3000/#/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://localhost:3000/#/signup">Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://localhost:3000/#/logout">Logout</a>
-          </li>
-  
+    <!-- Custom styles for this template -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Switch Side!</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:3000/#/topics-list">Topics</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+             <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                User
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="http://localhost:3000/#/login">Log In</a>
+                <a class="dropdown-item" href="http://localhost:3000/#/signup">Sign Up</a>
+                <a class="dropdown-item" href="http://localhost:3000/#/logout">Log Out</a>
+              </div>
+            </li>
+
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        
+        </div>
       </div>
     </nav>
-    <!-- End of Nav Bar -->
 
 
-  <div id="vue-app">
+    <div id="vue-app">
 
-    <router-view></router-view>
+      <router-view></router-view>
 
-  </div>
-  
-</body>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <ul class="list-inline text-center">
+              <li class="list-inline-item">
+                <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/clean-blog.min.js"></script>
+
+  </body>
 </html>
-
-<!-- ----------------------------------- -->
-<template id="home-page">
-  <div class="vue-component">
-    
-
-  </div>
-</template>
-<!-- ----------------------------------- -->
-
-<!-- ----------------------------------- -->
-<template id="topics-list">
-  <div class="vue-component">
-    <h1>Topics!</h1>
-    <ul class="list-group" v-for="topic in topics">
-      <p v-on:click="directToDebates(topic)">{{ topic.topic_title }}</p>
-    </ul>
-
-    <button v-on:click='redirectCreateTopic(topic)'>Create a topic</button>
-
-  </div>
-</template>
-<!-- ----------------------------------- -->
-
-<!-- ----------------------------------- -->
-<template id="create-a-topic">
-  <div class="vue-component">
-    <p>Topic: <input type="text" v-model="topicTitle"></p>
-    <button v-on:click="createTopic">Create!</button>
-
-  </div>
-</template>
-<!-- ----------------------------------- -->
-
-<!-- ----------------------------------- -->
-<template id="topic-page">
-  <div class="vue-component">
-    <p>{{ topic }}</p>
-    
-    <p v-for="debate in debates" v-on:click="directToDebates(debate)">
-    Debate!  (Aff Votes: {{debate.affirmative_votes}} Neg Votes: {{debate.negative_votes}})
-    </p>
-
-    <button v-on:click="findFreeAff">Go Aff</button>
-    <button v-on:click="findFreeNeg">Go Neg</button>
-
-  </div>
-</template>
-<!-- ----------------------------------- -->
 
 <!-- ----------------------------------- -->
 <template id="signup-page">
@@ -180,11 +179,166 @@
 <!-- ----------------------------------- -->
 
 <!-- ----------------------------------- -->
+  <template id="home-page">
+    <div class="vue-component">
+      <!-- Page Header -->
+      <header class="masthead" style="background-image: url('img/debate-tub.JPG')">
+        <div class="overlay"></div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+              <div class="site-heading">
+                <h1>Switch Side</h1>
+                <span class="subheading">Debating a Well-Informed Opponent</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-preview">
+              <a href="post.html">
+                <h2 class="post-title">
+                  Man must explore, and this is exploration at its greatest
+                </h2>
+                <h3 class="post-subtitle">
+                  Problems look mighty small from 150 miles up
+                </h3>
+              </a>
+              <p class="post-meta">Posted by
+                <a href="#">Start Bootstrap</a>
+                on September 24, 2018</p>
+            </div>
+            <hr>
+            <div class="post-preview">
+              <a href="post.html">
+                <h2 class="post-title">
+                  I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.
+                </h2>
+              </a>
+              <p class="post-meta">Posted by
+                <a href="#">Start Bootstrap</a>
+                on September 18, 2018</p>
+            </div>
+            <hr>
+            <div class="post-preview">
+              <a href="post.html">
+                <h2 class="post-title">
+                  Science has not yet mastered prophecy
+                </h2>
+                <h3 class="post-subtitle">
+                  We predict too much for the next year and yet far too little for the next ten.
+                </h3>
+              </a>
+              <p class="post-meta">Posted by
+                <a href="#">Start Bootstrap</a>
+                on August 24, 2018</p>
+            </div>
+            <hr>
+            <div class="post-preview">
+              <a href="post.html">
+                <h2 class="post-title">
+                  Failure is not an option
+                </h2>
+                <h3 class="post-subtitle">
+                  Many say exploration is part of our destiny, but it’s actually our duty to future generations.
+                </h3>
+              </a>
+              <p class="post-meta">Posted by
+                <a href="#">Start Bootstrap</a>
+                on July 8, 2018</p>
+            </div>
+            <hr>
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </template>
+<!-- ----------------------------------- -->
+
+
+<!-- ----------------------------------- -->
+  <template id="topics-list">
+    <div class="vue-component">
+      <br>
+      <br>
+
+      <center><h1>Topics!</h1></center>
+
+      <div v-for="topic in topics">
+        <ul class="list-group">
+          <li class="list-group-item justify-content-between" v-on:click="directToDebates(topic)">
+            {{ topic.topic_title }}
+            <span class="badge badge-default badge-pill">{{ topic.number_of_debates }} Debates</span>
+          </li>
+        </ul>
+      </div>
+
+      <br>
+
+      <center>
+        <a class="btn btn-success" v-on:click='redirectCreateTopic(topic)'>Create a Topic</a>
+      </center>
+
+    </div>
+  </template>
+<!-- ----------------------------------- -->
+
+<!-- ----------------------------------- -->
+  <template id="create-a-topic">
+    <div class="vue-component">
+      <br>
+      <p>Topic: <input type="text" v-model="topicTitle"></p>
+      <button v-on:click="createTopic">Create!</button>
+
+    </div>
+  </template>
+<!-- ----------------------------------- -->
+
+<!-- ----------------------------------- -->
+  <template id="topic-page">
+    <div class="vue-component">
+      <br>
+      <p>{{ topic }}</p>
+      
+      <p v-for="debate in debates" v-on:click="directToDebates(debate)">
+      Debate!  (Aff Votes: {{debate.affirmative_votes}} Neg Votes: {{debate.negative_votes}})
+      </p>
+
+      <button v-on:click="findFreeAff">Go Aff</button>
+      <button v-on:click="findFreeNeg">Go Neg</button>
+
+    </div>
+  </template>
+<!-- ----------------------------------- -->
+
+<!-- ----------------------------------- -->
 <template id="debate-page">
   <div class="vue-component">
+    <br>
+    <br>
+    
     <h4 v-for="speech in speeches" :key="speech.id" v-on:click="showStuff(speech)"> 
       {{ speech.speech_title }}
-      <div v-if="speech.show">
+      <div class="card" style="width: 70rem;" v-if="speech.show">
+        <div v-for="structured in speech.structured_arguments">
+          <h1>{{ structured.argument_name }}</h1>
+          <hr>
+          <div class="card-block" v-for="card in structured.cards">
+            <h4 class="card-title">{{card.tag}}</h4>
+            <p class="card-text">{{card.bibliography}}</p>
+            <p class="card-text">{{ card.card_text}}</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+      <!-- <div v-if="speech.show">
         <h3 v-for="structured in speech.structured_arguments">
           {{ structured.argument_name }}
           <p v-for="card in structured.cards">
@@ -195,10 +349,7 @@
             {{ card.card_text}}
           </p>
         </h3>
-        <h3 v-for="freeform in speech.free_forms">
-          {{ freeform.ff_text}}
-        </h3>
-      </div>
+      </div> -->
     </h4>
   <button v-on:click="createASpeech">Create a speech!</button>
   </div>
@@ -208,6 +359,8 @@
 <!-- ----------------------------------- -->
 <template id="create-a-speech">
   <div class="vue-component">
+    <br>
+    <br>
     <div v-for="structured in completedStructured">
       <h3>{{ structured.title }}</h3>
       <p v-for="card in structured.cards" v-on:click="editCard(card)">
@@ -242,12 +395,3 @@
   </div>
 </template>
 <!-- ----------------------------------- -->
-
-
-
-
-<!-- JQuery Stuff -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
-

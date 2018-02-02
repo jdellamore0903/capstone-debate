@@ -28,6 +28,7 @@ var TopicsList = {
       console.log(response.data);
       this.topics = response.data;
     }.bind(this));
+    document.body.style.backgroundColor = "#0085a9";
   },
   methods: {
     redirectCreateTopic: function() {

@@ -7,7 +7,8 @@ class Topic < ApplicationRecord
       topic_title: topic_title,
       prior_aff_votes: prior_aff_votes,
       prior_neg_votes: prior_neg_votes,
-      debates: debates.as_json
+      debates: debates.as_json,
+      number_of_debates: debates.length
     }
   end
     
