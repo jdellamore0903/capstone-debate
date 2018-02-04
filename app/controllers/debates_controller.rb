@@ -73,4 +73,18 @@ class DebatesController < ApplicationController
     render json: {message: "It was deleted!"}
   end
 
+  def vote
+    debate = Debate.find_by(id: params["id"])
+    if params["side"] == "aff"
+      debate["affirmative_votes"] = debate["affirmative_votes"] + 1
+    else
+      debate["negative_votes"] = debate["affirmative_votes"] + 1
+    end
+    p debate
+    p "---------"
+    p "This works"
+    p "---------"
+    debate.save
+  end
+
 end

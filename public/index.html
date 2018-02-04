@@ -48,9 +48,6 @@
             <li class="nav-item">
               <a class="nav-link" href="http://localhost:3000/#/topics-list">Topics</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
-            </li>
              <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 User
@@ -196,63 +193,19 @@
         </div>
       </header>
 
+
       <!-- Main Content -->
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="post-preview">
-              <a href="post.html">
-                <h2 class="post-title">
-                  Man must explore, and this is exploration at its greatest
-                </h2>
+            <div class="post-preview" v-for="card in recentCites">
                 <h3 class="post-subtitle">
-                  Problems look mighty small from 150 miles up
+                  {{card.card_text}}
                 </h3>
-              </a>
-              <p class="post-meta">Posted by
-                <a href="#">Start Bootstrap</a>
-                on September 24, 2018</p>
+              <p class="post-meta">
+                {{card.bibliography}}</p>
             </div>
-            <hr>
-            <div class="post-preview">
-              <a href="post.html">
-                <h2 class="post-title">
-                  I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.
-                </h2>
-              </a>
-              <p class="post-meta">Posted by
-                <a href="#">Start Bootstrap</a>
-                on September 18, 2018</p>
-            </div>
-            <hr>
-            <div class="post-preview">
-              <a href="post.html">
-                <h2 class="post-title">
-                  Science has not yet mastered prophecy
-                </h2>
-                <h3 class="post-subtitle">
-                  We predict too much for the next year and yet far too little for the next ten.
-                </h3>
-              </a>
-              <p class="post-meta">Posted by
-                <a href="#">Start Bootstrap</a>
-                on August 24, 2018</p>
-            </div>
-            <hr>
-            <div class="post-preview">
-              <a href="post.html">
-                <h2 class="post-title">
-                  Failure is not an option
-                </h2>
-                <h3 class="post-subtitle">
-                  Many say exploration is part of our destiny, but it’s actually our duty to future generations.
-                </h3>
-              </a>
-              <p class="post-meta">Posted by
-                <a href="#">Start Bootstrap</a>
-                on July 8, 2018</p>
-            </div>
-            <hr>
+            
             
           </div>
         </div>
@@ -294,8 +247,28 @@
   <template id="create-a-topic">
     <div class="vue-component">
       <br>
-      <p>Topic: <input type="text" v-model="topicTitle"></p>
-      <button v-on:click="createTopic">Create!</button>
+      <br>
+
+
+      <CENTER>
+        <form>
+          <div class="form-group">
+            <h1 class="display-1">
+              Create a Topic!
+            </h1>
+            <p>
+              Remember to be as specific as you can. Try to be as explicit as possible!
+            </p>
+            <input type="text" class="form-control" id="formGroupExampleInput" v-model="topicTitle">
+          </div>
+        </form>
+      </CENTER>
+      
+
+      <center>
+        <a class="btn btn-success" v-on:click="createTopic">Create Topic</a>
+      </center>
+      
 
     </div>
   </template>
@@ -305,14 +278,24 @@
   <template id="topic-page">
     <div class="vue-component">
       <br>
-      <p>{{ topic }}</p>
-      
-      <p v-for="debate in debates" v-on:click="directToDebates(debate)">
-      Debate!  (Aff Votes: {{debate.affirmative_votes}} Neg Votes: {{debate.negative_votes}})
-      </p>
+      <br>
+      <center><h1>{{ topic }}</h1></center>
 
-      <button v-on:click="findFreeAff">Go Aff</button>
-      <button v-on:click="findFreeNeg">Go Neg</button>
+      <center>
+        <a class="btn btn-success" v-on:click="findFreeAff">Go Aff</a>
+        <a class="btn btn-success" v-on:click="findFreeNeg">Go Neg</a>
+      </center>
+
+      <br>
+
+      <div v-for="debate in debates">
+        <ul class="list-group">
+          <li class="list-group-item justify-content-between" v-on:click="directToDebates(debate)">
+            Debate!  (Aff Votes: {{debate.affirmative_votes}} Neg Votes: {{debate.negative_votes}})
+            <span class="badge badge-default badge-pill"></span>
+          </li>
+        </ul>
+      </div>
 
     </div>
   </template>
@@ -323,35 +306,45 @@
   <div class="vue-component">
     <br>
     <br>
+    <center>
+      <button type="button" class="btn btn-warning" v-on:click="voteAff('aff')">Vote Aff</button>
+      <button type="button" class="btn btn-danger" v-on:click="voteAff('neg')">Vote Neg</button>
+    </center>
     
-    <h4 v-for="speech in speeches" :key="speech.id" v-on:click="showStuff(speech)"> 
-      {{ speech.speech_title }}
+    
+    <div v-for="speech in speeches" :key="speech.id"> 
+      <center>
+        <h1 class="display-1" v-on:click="showStuff(speech)">
+          {{ speech.speech_title }}
+        </h1>
+      </center>
+
+      
       <div class="card" style="width: 70rem;" v-if="speech.show">
         <div v-for="structured in speech.structured_arguments">
-          <h1>{{ structured.argument_name }}</h1>
+          <center>
+            <h1>{{ structured.argument_name }}</h1>
+          </center>
           <hr>
           <div class="card-block" v-for="card in structured.cards">
+            <br>
             <h4 class="card-title">{{card.tag}}</h4>
             <p class="card-text">{{card.bibliography}}</p>
-            <p class="card-text">{{ card.card_text}}</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <blockquote class="blockquote">
+              <p class="mb-0">{{ card.card_text}}</p>
+            </blockquote>
+            <br>
           </div>
         </div>
       </div>
-      <!-- <div v-if="speech.show">
-        <h3 v-for="structured in speech.structured_arguments">
-          {{ structured.argument_name }}
-          <p v-for="card in structured.cards">
-            {{card.tag}}
-            <br>
-            {{card.bibliography}}
-            <br>
-            {{ card.card_text}}
-          </p>
-        </h3>
-      </div> -->
-    </h4>
-  <button v-on:click="createASpeech">Create a speech!</button>
+
+    </div>
+
+  <center>
+    <a class="btn btn-success" v-on:click="createASpeech">Create a speech!</a>    
+  </center>
+  
+
   </div>
 </template>
 <!-- ----------------------------------- -->
@@ -364,33 +357,45 @@
     <div v-for="structured in completedStructured">
       <h3>{{ structured.title }}</h3>
       <p v-for="card in structured.cards" v-on:click="editCard(card)">
-        {{ card }}
+        Card: {{ card.tag }}
+
       </p>
     </div>
 
-
+    <center>
     <div v-for="structured in structuredArgumentsForm">
-      {{ structured.text }}: <input type="text" v-model="argumentName">
-      <button v-on:click="addCards">Add Cards</button>
+      <h5>{{ structured.text }}:</h5> <input type="text" v-model="argumentName">
+      <br>
+      <br>
+      <a class="btn btn-success" v-on:click="addCards">Add Cards</a>
     </div> 
+    </center>
 
+    <center>
     <div v-for="card in cardsForm">
-      <p>{{ card.text1 }}: <input type="text" v-model="cardTag"></p>
-      <p>{{ card.text2 }}: <input type="text" v-model="authorFirst"></p>
-      <p>{{ card.text3 }}: <input type="text" v-model="authorLast"></p>
-      <p>{{ card.text4 }}: <input type="text" v-model="articleTitle"></p>
-      <p>{{ card.text5 }}: <input type="text" v-model="articleDate"></p>
-      <p>{{ card.text6 }}: <input type="text" v-model="URL"></p>
-      <p>{{ card.text7 }}: <input type="text" v-model="cardText"></p>
-
-      <button v-on:click="addCard">Add Card</button>
-      <button v-on:click="finishedCard">Finished</button>
+      <h5>{{ card.text1 }}: </h5> <input type="text" v-model="cardTag">
+      <h5>{{ card.text2 }}:</h5> <input type="text" v-model="authorFirst">
+      <h5>{{ card.text3 }}:</h5> <input type="text" v-model="authorLast">
+      <h5>{{ card.text4 }}:</h5> <input type="text" v-model="articleTitle">
+      <h5>{{ card.text5 }}:</h5> <input type="text" v-model="articleDate">
+      <h5>{{ card.text6 }}:</h5> <input type="text" v-model="URL">
+      <!-- <h5>{{ card.text7 }}:</h5> <input type="text" v-model="cardText"> -->
+      <h5>{{ card.text7 }}:</h5> <textarea rows="4" cols="50" v-model="cardText"></textarea>
+      <br>
+      <!-- <button v-on:click="addCard">Add Card</button>
+      <button v-on:click="finishedCard">Finished</button> -->
+      <br>
+      <a class="btn btn-success" v-on:click="addCard">Add Card</a>
+      <a class="btn btn-success" v-on:click="finishedCard">Finished</a>
     </div> 
+    </center>
 
     <br>
     <br>
-    <button v-on:click="addStructured">Add Structured Argument</button>
-    <button v-on:click="commitSpeech">Commit Speech!</button>
+    <center>
+      <a class="btn btn-success" v-on:click="addStructured">Add Argument</a>
+      <a class="btn btn-success" v-on:click="commitSpeech">Commit Speech!</a>
+    </center>
 
   </div>
 </template>

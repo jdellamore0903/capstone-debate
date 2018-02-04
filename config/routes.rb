@@ -41,14 +41,15 @@ Rails.application.routes.draw do
   get '/debates/:id' => 'debates#show'
   post '/debates' => 'debates#create'
   patch '/debates/:id' => 'debates#update'
+  patch '/debates-vote/:id/:side' => 'debates#vote'
   delete 'debates/:id' => 'debates#destroy'
 
   get '/speeches' => 'speeches#index'
   get '/speeches/by-debate/:debate_id' => 'speeches#find_all_debate_speeches'
   get '/speeches/:id' => 'speeches#show'
   post '/speeches' => 'speeches#create'
-  post '/create-speeches' => 'speeches#commit_speech'
   patch '/speeches/:id' => 'speeches#update'
+  post '/create-speeches/:id' => 'speeches#commit_speech'
   delete 'speeches/:id' => 'speeches#destroy'
 
   get '/structured_arguments' => 'structured_arguments#index'

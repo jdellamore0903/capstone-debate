@@ -5,10 +5,21 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      message: "Welcome to Vue.js!"
+      message: "Welcome to Vue.js!",
+      recentCites: []
     };
   },
-  created: function() {},
+  created: function() {
+    axios.get('/cards').then(function(response) {
+      console.log(response.data);
+      var response = response.data;
+      citationArray = [];
+      for (var i = response.length - 1; i > response.length - 5; i--) {
+        citationArray.push(response[i]);
+      }
+      this.recentCites = citationArray;
+    }.bind(this));
+  },
   methods: {},
   computed: {}
 };
@@ -28,7 +39,7 @@ var TopicsList = {
       console.log(response.data);
       this.topics = response.data;
     }.bind(this));
-    document.body.style.backgroundColor = "#0085a9";
+    document.body.style.backgroundColor = "#7388d1";
   },
   methods: {
     redirectCreateTopic: function() {
@@ -132,7 +143,9 @@ var CreateTopic = {
       topicTitle: ""
     };
   },
-  created: function() {},
+  created: function() {
+    document.body.style.backgroundColor = "#6d9ea8";
+  },
   methods: {
     createTopic: function() {
       console.log(this.topicTitle);
@@ -143,6 +156,7 @@ var CreateTopic = {
         function(response) {
           console.log(response.data);
         }.bind(this));
+      return router.push({path: '/topics-list'});
     }
   },
   computed: {}
@@ -168,6 +182,7 @@ var TopicPage = {
       this.topic = response.data.topic_title;
       this.debates = response.data.debates;
       this.topicID = response.data.id;
+      document.body.style.backgroundColor = "#0085a9";
     }.bind(this));
   },
   methods: {
@@ -271,6 +286,7 @@ var DebatePage = {
     };
   },
   created: function() {
+    document.body.style.backgroundColor = "#0085a9";
     axios.get('/speeches/by-debate/' + this.$route.params.id).then(function(response) {
       console.log(response.data);
       this.debateIDNew = this.$route.params.id;
@@ -322,6 +338,15 @@ var DebatePage = {
     },
     createASpeech: function() {
       return router.push({path: '/create-speech/' + this.debateIDNew + '/' + this.nextSpeech});
+    },
+    voteAff: function(inputSide) {
+      console.log(this.debateIDNew);
+      var side = inputSide;
+      axios.patch('/debates-vote/' + this.debateIDNew + '/' + side).then(
+        function(response) {     
+          console.log(response.data);
+      return router.push({path: "/debate/" + this.debateIDNew});
+    }.bind(this));
     }
   },
   computed: {}
@@ -358,6 +383,7 @@ var CreateSpeech = {
   created: function() {
     this.debateID = this.$route.params.id;
     this.speech = this.$route.params.speech;
+    document.body.style.backgroundColor = "#0085a9";
   },
   methods: {
     createTopic: function() {
@@ -448,6 +474,7 @@ var CreateSpeech = {
     editCard: function(inputCard) {
       //NEED TO FIGURE THIS ONE OUT
       console.log(inputCard);
+      
       this.cardTag = inputCard.tag;
       this.authorFirst = inputCard.authorFirst;
       this.authorLast = inputCard.authorLast;
@@ -491,6 +518,11 @@ var app = new Vue({
     var jwt = localStorage.getItem("jwt");
     if (jwt) {
       axios.defaults.headers.common["Authorization"] = jwt;
+    }
+  },
+  watch: {
+    '$route': function() {
+      window.location.reload();
     }
   }
 });

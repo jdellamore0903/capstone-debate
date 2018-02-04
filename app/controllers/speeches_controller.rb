@@ -44,7 +44,11 @@ class SpeechesController < ApplicationController
   end
 
   def find_all_debate_speeches
+    debate = Debate.find_by(id: params[:debate_id])
     speeches = Speech.where(debate_id: params[:debate_id])
+    p '__________________'
+    p debate
+    p speeches
     render json: speeches.as_json
   end
 
