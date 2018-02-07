@@ -66,6 +66,9 @@ var SignupPage = {
       errors: []
     };
   },
+  created: function() {
+    document.body.style.backgroundColor = "#6d9ea8";
+  },
   methods: {
     submit: function() {
       var params = {
@@ -98,6 +101,9 @@ var LoginPage = {
       password: "",
       errors: []
     };
+  },
+  created: function() {
+    document.body.style.backgroundColor = "#6d9ea8";
   },
   methods: {
     submit: function() {
@@ -148,13 +154,11 @@ var CreateTopic = {
   },
   methods: {
     createTopic: function() {
-      console.log(this.topicTitle);
       var params = {
         topic_title: this.topicTitle
       };
       axios.post('/topics', params).then(
         function(response) {
-          console.log(response.data);
         }.bind(this));
       return router.push({path: '/topics-list'});
     }
@@ -178,7 +182,6 @@ var TopicPage = {
   },
   created: function() {
     axios.get('/topics/' + this.$route.params.id).then(function(response) {
-      console.log(response.data);
       this.topic = response.data.topic_title;
       this.debates = response.data.debates;
       this.topicID = response.data.id;
@@ -201,7 +204,6 @@ var TopicPage = {
       console.log(freeAffDebates);
       if (openDebate) {
         //redirect to debate page and create 1AC
-        console.log("IT ENTERED");
         var params = {
           aff_user_id: 1
         };
@@ -210,18 +212,16 @@ var TopicPage = {
           }.bind(this));
         return router.push({path: '/debate/' + freeAffDebates[0].id});
       } else {
-        console.log("IT IS WORKING");
         var params = {
           aff_user_id: 1,
           topic_id: this.topicID
         };
         axios.post('/debates', params).then(
           function(response) {     
-            console.log(response.data);
             this.myDebateId = response.data.id;
-            console.log(this.myDebateId);
+            return router.push({path: '/debate/' + this.myDebateId});
           }.bind(this));
-        return router.push({path: '/debate/' + this.myDebateId});
+
       }
     },
     findFreeNeg: function() {
@@ -239,7 +239,6 @@ var TopicPage = {
       console.log(freeNegDebates);
       if (openDebate) {
         //redirect to debate page and create 1AC
-        console.log("IT ENTERED");
         var params = {
           neg_user_id: 1
         };
@@ -248,22 +247,18 @@ var TopicPage = {
           }.bind(this));
         return router.push({path: '/debate/' + freeNegDebates[0].id});
       } else {
-        console.log("IT IS WORKING");
         var params = {
           neg_user_id: 1,
           topic_id: this.topicID
         };
         axios.post('/debates', params).then(
           function(response) {     
-            console.log(response.data);
             this.myDebateId = response.data.id;
-            console.log(this.myDebateId);
+            return router.push({path: '/debate/' + this.myDebateId});
           }.bind(this));
-        return router.push({path: '/debate/' + this.myDebateId});
       }
     },
     directToDebates: function(inputDebate) {
-      console.log(inputDebate.id);
       return router.push({path: '/debate/' + inputDebate.id});
     }
   },

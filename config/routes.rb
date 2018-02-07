@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   get '/speeches/:id' => 'speeches#show'
   post '/speeches' => 'speeches#create'
   patch '/speeches/:id' => 'speeches#update'
-  post '/create-speeches/:id' => 'speeches#commit_speech'
+  post '/create-speeches' => 'speeches#commit_speech'
   delete 'speeches/:id' => 'speeches#destroy'
 
   get '/structured_arguments' => 'structured_arguments#index'
